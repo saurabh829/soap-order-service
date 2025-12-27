@@ -1,0 +1,49 @@
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:tns="http://company.com/order"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             targetNamespace="http://company.com/order">
+
+    <types>
+        <xsd:schema targetNamespace="http://company.com/order">
+            <xsd:import namespace="http://company.com/order"
+                        schemaLocation="xsd/order.xsd"/>
+        </xsd:schema>
+    </types>
+
+    <message name="OrderRequest">
+        <part name="parameters" element="tns:OrderRequest"/>
+    </message>
+
+    <message name="OrderResponse">
+        <part name="parameters" element="tns:OrderResponse"/>
+    </message>
+
+    <portType name="OrderPort">
+        <operation name="processOrder">
+            <input message="tns:OrderRequest"/>
+            <output message="tns:OrderResponse"/>
+        </operation>
+    </portType>
+
+    <binding name="OrderBinding" type="tns:OrderPort">
+        <soap:binding style="document"
+                      transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="processOrder">
+            <soap:operation soapAction="processOrder"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+    </binding>
+
+    <service name="OrderService">
+        <port name="OrderPort" binding="tns:OrderBinding">
+            <soap:address location="http://localhost:8080/ws"/>
+        </port>
+    </service>
+
+</definitions>
