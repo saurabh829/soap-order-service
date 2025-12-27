@@ -1,3 +1,8 @@
 spring:
   webservices:
     path: /ws
+
+server:
+  forward-headers-strategy: framework
+  servlet:
+    context-path: /
